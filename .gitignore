@@ -1,0 +1,34 @@
+# Dependencies
+node_modules/
+package-lock.json
+
+# Build artifacts
+blockchain/cache/
+blockchain/artifacts/
+artifacts/
+cache/
+
+# Runtime files
+*.log
+node.log
+blockchain/events.log
+blockchain/deployed.address
+blockchain/deployed.json
+
+# Environment
+.env
+.env.local
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Temporary
+uploads/
+*.tmp

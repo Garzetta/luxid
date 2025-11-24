@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LuxID - Luxury Authentication</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/html5-qrcode"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&display=swap');
+        .font-serif { font-family: 'Playfair Display', serif; }
+        #reader { max-width: 500px; margin: 0 auto; }
+        #reader video { border-radius: 8px; }
+    </style>
+</head>
+<body class="bg-[#FAF8F5] min-h-screen">
+    <!-- Header -->
+    <header class="bg-white border-b border-[#E8E3DA] sticky top-0 z-50">
+        <div class="max-w-6xl mx-auto px-6 py-6 flex justify-between items-center">
+            <h1 class="text-3xl font-serif text-[#4A4035]">LuxID</h1>
+            <nav class="space-x-8">
+                <a href="#home" class="text-sm uppercase tracking-wider text-[#8B7355] hover:text-[#6B5D52]">Home</a>
+                <a href="#verify" class="text-sm uppercase tracking-wider text-[#6B5D52] hover:text-[#8B7355]">Verify</a>
+                <a href="#about" class="text-sm uppercase tracking-wider text-[#6B5D52] hover:text-[#8B7355]">About</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="home" class="py-24 px-6 text-center">
+        <p class="text-sm tracking-widest uppercase text-[#8B7355] mb-4">Blockchain Authentication</p>
+        <h2 class="text-5xl md:text-6xl font-serif text-[#4A4035] mb-6 leading-tight">Verify Luxury<br>With Confidence</h2>
+        <p class="text-lg text-[#6B5D52] mb-10 max-w-2xl mx-auto leading-relaxed">
+            Protect your investment with blockchain-verified authenticity. Every product, every detail, immutably recorded.
+        </p>
+        <a href="#verify" class="inline-block bg-[#8B7355] text-white px-10 py-4 text-sm uppercase tracking-wider hover:bg-[#6B5D52] transition-colors">
+            Verify Product
+        </a>
+    </section>
+
+    <!-- Features -->
+    <section class="py-20 px-6 bg-white">
+        <div class="max-w-6xl mx-auto grid md:grid-cols-3 gap-12 text-center">
+            <div>
+                <div class="w-16 h-16 mx-auto mb-6 bg-[#F5EFE7] rounded-full flex items-center justify-center text-3xl">
+                    🛡️
+                </div>
+                <h3 class="text-xl font-serif text-[#4A4035] mb-3">Immutable Records</h3>
+                <p class="text-[#6B5D52]">Permanently recorded on blockchain, impossible to alter or forge.</p>
+            </div>
+            <div>
+                <div class="w-16 h-16 mx-auto mb-6 bg-[#F5EFE7] rounded-full flex items-center justify-center text-3xl">
+                    ⚡
+                </div>
+                <h3 class="text-xl font-serif text-[#4A4035] mb-3">Instant Verification</h3>
+                <p class="text-[#6B5D52]">Scan QR code and get authentication results in seconds.</p>
+            </div>
+            <div>
+                <div class="w-16 h-16 mx-auto mb-6 bg-[#F5EFE7] rounded-full flex items-center justify-center text-3xl">
+                    📦
+                </div>
+                <h3 class="text-xl font-serif text-[#4A4035] mb-3">Brand Trust</h3>
+                <p class="text-[#6B5D52]">Transparent verification builds confidence in every purchase.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Verify Section -->
+    <section id="verify" class="py-20 px-6">
+        <div class="max-w-2xl mx-auto">
+            <div class="text-center mb-12">
+                <h2 class="text-4xl font-serif text-[#4A4035] mb-4">Verify Authenticity</h2>
+                <p class="text-[#6B5D52]">Scan the QR code or enter the product ID manually</p>
+            </div>
+
+            <!-- QR Scanner -->
+            <div class="bg-white rounded-lg shadow-sm border border-[#E8E3DA] p-8 mb-8">
+                <div id="qr-scanner-section">
+                    <button onclick="toggleScanner()" id="scanButton"
+                        class="w-full bg-[#F5EFE7] hover:bg-[#E8E3DA] transition-colors py-12 rounded-lg flex flex-col items-center justify-center space-y-4">
+                        <span class="text-6xl">📷</span>
+                        <span class="text-lg text-[#4A4035] font-serif">Scan QR Code</span>
+                    </button>
+                    
+                    <div id="reader" class="hidden mt-6"></div>
+                    
+                    <button onclick="stopScanner()" id="stopButton" 
+                        class="hidden w-full mt-4 bg-red-100 text-red-800 py-3 rounded hover:bg-red-200">
+                        Stop Scanner
+                    </button>
+                </div>
+            </div>
+
+            <!-- Manual Entry -->
+            <div class="bg-white rounded-lg shadow-sm border border-[#E8E3DA] p-8">
+                <label class="block text-sm tracking-wider uppercase text-[#6B5D52] mb-3">
+                    Or Enter Product ID
+                </label>
+                <div class="flex space-x-3">
+                    <input type="text" id="productId" placeholder="e.g., LV-2025-01" 
+                        class="flex-1 px-4 py-3 border border-[#E8E3DA] focus:outline-none focus:border-[#8B7355] text-[#4A4035]">
+                    <button onclick="verifyProduct()" 
+                        class="bg-[#8B7355] text-white px-8 py-3 hover:bg-[#6B5D52] transition-colors flex items-center space-x-2">
+                        <span>🔍</span>
+                        <span>Verify</span>
+                    </button>
+                </div>
+                <p class="text-xs text-[#8B7355] mt-3">Try: LV-2025-01, GG-2025-02, or RP-2025-03</p>
+            </div>
+
+            <!-- Result Display -->
+            <div id="result" class="hidden mt-8"></div>
+        </div>
+    </section>
+
+    <!-- QR Code Display Section -->
+    <section class="py-20 px-6 bg-[#F5EFE7]">
+        <div class="max-w-4xl mx-auto text-center">
+            <h2 class="text-4xl font-serif text-[#4A4035] mb-8">Sample QR Codes</h2>
+            <p class="text-[#6B5D52] mb-12">Scan these QR codes with your phone camera to test verification</p>
+            
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="bg-white p-6 rounded-lg shadow-sm">
+                    <img src="/qr/LV-2025-01.png" alt="LV QR" class="w-full mb-4" onerror="this.style.display='none'">
+                    <h3 class="font-serif text-lg text-[#4A4035] mb-2">Louis Vuitton</h3>
+                    <p class="text-sm text-[#6B5D52]">LV-2025-01</p>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-sm">
+                    <img src="/qr/GG-2025-02.png" alt="Gucci QR" class="w-full mb-4" onerror="this.style.display='none'">
+                    <h3 class="font-serif text-lg text-[#4A4035] mb-2">Gucci</h3>
+                    <p class="text-sm text-[#6B5D52]">GG-2025-02</p>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-sm">
+                    <img src="/qr/RP-2025-03.png" alt="Rolex QR" class="w-full mb-4" onerror="this.style.display='none'">
+                    <h3 class="font-serif text-lg text-[#4A4035] mb-2">Rolex</h3>
+                    <p class="text-sm text-[#6B5D52]">RP-2025-03</p>
+                </div>
+            </div>
+            
+            <p class="text-sm text-[#8B7355] mt-8">
+                💡 Tip: Point your phone camera at any QR code above, then enter the ID in the verification form
+            </p>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-20 px-6">
+        <div class="max-w-4xl mx-auto">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-serif text-[#4A4035] mb-6">About LuxID</h2>
+                <p class="text-xl text-[#6B5D52] leading-relaxed max-w-2xl mx-auto">
+                    A blockchain-based authentication system protecting luxury goods from counterfeiting through immutable digital certificates.
+                </p>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-8 mb-16">
+                <div class="bg-white p-8 rounded-lg border border-[#E8E3DA]">
+                    <h3 class="text-2xl font-serif text-[#4A4035] mb-4">Our Mission</h3>
+                    <p class="text-[#6B5D52] leading-relaxed">
+                        To protect luxury brands and consumers from counterfeit products by leveraging blockchain technology for transparent, secure, and permanent product authentication.
+                    </p>
+                </div>
+
+                <div class="bg-white p-8 rounded-lg border border-[#E8E3DA]">
+                    <h3 class="text-2xl font-serif text-[#4A4035] mb-4">Why Blockchain?</h3>
+                    <p class="text-[#6B5D52] leading-relaxed">
+                        Blockchain provides immutability, transparency, and decentralization—making it impossible for counterfeiters to forge authenticity records.
+                    </p>
+                </div>
+            </div>
+
+            <div class="bg-[#F5EFE7] p-12 rounded-lg text-center">
+                <h3 class="text-3xl font-serif text-[#4A4035] mb-4">Group 5 - Final Project</h3>
+                <p class="text-[#6B5D52] mb-6">Blockchain Technology Course</p>
+                <div class="space-y-2 text-sm text-[#6B5D52]">
+                    <p>Rr. Garzetta Aleyda Harimurti • 23/511422/PA/21793</p>
+                    <p>Klara Ahinta Daniswara • 24/532751/PA/22531</p>
+                    <p>Hilmi Fazli Nadiarni • 25/562917/NPA/19984</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-white border-t border-[#E8E3DA] py-12 px-6">
+        <div class="max-w-6xl mx-auto text-center">
+            <h3 class="text-2xl font-serif text-[#4A4035] mb-4">LuxID</h3>
+            <p class="text-sm text-[#6B5D52] mb-6">Blockchain-Verified Luxury Authentication</p>
+            <p class="text-xs text-[#8B7355]">© 2025 LuxID. Blockchain Technology Final Project.</p>
+        </div>
+    </footer>
+
+    <script>
+        let html5QrCode = null;
+
+        async function toggleScanner() {
+            const readerDiv = document.getElementById('reader');
+            const scanButton = document.getElementById('scanButton');
+            const stopButton = document.getElementById('stopButton');
+
+            if (!html5QrCode) {
+                html5QrCode = new Html5Qrcode("reader");
+            }
+
+            try {
+                readerDiv.classList.remove('hidden');
+                scanButton.classList.add('hidden');
+                stopButton.classList.remove('hidden');
+
+                await html5QrCode.start(
+                    { facingMode: "environment" },
+                    { fps: 10, qrbox: { width: 250, height: 250 } },
+                    (decodedText) => {
+                        document.getElementById('productId').value = decodedText;
+                        stopScanner();
+                        verifyProduct();
+                    }
+                );
+            } catch (err) {
+                alert('Camera access denied or not available. Please enter Product ID manually.');
+                stopScanner();
+            }
+        }
+
+        function stopScanner() {
+            const readerDiv = document.getElementById('reader');
+            const scanButton = document.getElementById('scanButton');
+            const stopButton = document.getElementById('stopButton');
+
+            if (html5QrCode && html5QrCode.isScanning) {
+                html5QrCode.stop().then(() => {
+                    readerDiv.classList.add('hidden');
+                    scanButton.classList.remove('hidden');
+                    stopButton.classList.add('hidden');
+                });
+            } else {
+                readerDiv.classList.add('hidden');
+                scanButton.classList.remove('hidden');
+                stopButton.classList.add('hidden');
+            }
+        }
+
+        async function verifyProduct() {
+            const productId = document.getElementById('productId').value.trim();
+            const resultDiv = document.getElementById('result');
+            
+            if (!productId) {
+                alert('Please enter a product ID');
+                return;
+            }
+
+            resultDiv.innerHTML = '<div class="bg-[#F5EFE7] p-8 rounded-lg text-center"><p class="text-[#8B7355]">🔍 Verifying...</p></div>';
+            resultDiv.classList.remove('hidden');
+
+            try {
+                const response = await fetch('http://localhost:3001/api/verify', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ productId })
+                });
+
+                const data = await response.json();
+
+                if (data.status === 'authentic') {
+                    resultDiv.innerHTML = `
+                        <div class="bg-green-50 border border-green-200 p-8 rounded-lg">
+                            <div class="flex items-center space-x-3 mb-6">
+                                <span class="text-4xl">✅</span>
+                                <h3 class="text-2xl font-serif text-green-900">Authentic Product</h3>
+                            </div>
+                            
+                            <div class="space-y-4 text-green-900">
+                                <div class="flex justify-between py-3 border-b border-green-200">
+                                    <span class="text-sm uppercase tracking-wider text-green-700">Brand</span>
+                                    <span class="font-serif">${data.product.brand}</span>
+                                </div>
+                                <div class="flex justify-between py-3 border-b border-green-200">
+                                    <span class="text-sm uppercase tracking-wider text-green-700">Model</span>
+                                    <span class="font-serif">${data.product.model}</span>
+                                </div>
+                                <div class="flex justify-between py-3 border-b border-green-200">
+                                    <span class="text-sm uppercase tracking-wider text-green-700">Serial Number</span>
+                                    <span class="font-mono text-sm">${data.product.serialNumber}</span>
+                                </div>
+                                <div class="flex justify-between py-3 border-b border-green-200">
+                                    <span class="text-sm uppercase tracking-wider text-green-700">Manufacturing</span>
+                                    <span>${data.product.manufacturing}</span>
+                                </div>
+                                <div class="flex justify-between py-3">
+                                    <span class="text-sm uppercase tracking-wider text-green-700">Registered</span>
+                                    <span>${data.product.registeredDate}</span>
+                                </div>
+                            </div>
+                            
+                            <div class="mt-6 p-4 bg-white rounded border border-green-200">
+                                <p class="text-sm text-green-800">
+                                    ✓ This product has been verified on the blockchain and is confirmed authentic.
+                                </p>
+                            </div>
+                        </div>
+                    `;
+                } else {
+                    resultDiv.innerHTML = `
+                        <div class="bg-red-50 border border-red-200 p-8 rounded-lg">
+                            <div class="flex items-center space-x-3 mb-4">
+                                <span class="text-4xl">❌</span>
+                                <h3 class="text-2xl font-serif text-red-900">Not Found</h3>
+                            </div>
+                            <p class="text-red-800 mb-4">This product ID is not registered on the blockchain.</p>
+                            <div class="mt-6 p-4 bg-white rounded border border-red-200">
+                                <p class="text-sm text-red-800">
+                                    ⚠️ Please verify the product ID or contact the seller.
+                                </p>
+                            </div>
+                        </div>
+                    `;
+                }
+            } catch (error) {
+                resultDiv.innerHTML = `
+                    <div class="bg-red-50 border border-red-200 p-8 rounded-lg">
+                        <p class="text-red-800">Error: ${error.message}</p>
+                        <p class="text-sm text-red-600 mt-2">Make sure the server is running on port 3001</p>
+                    </div>
+                `;
+            }
+        }
+
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
+<script>
+// Auto-fill product ID from URL parameter
+window.addEventListener('DOMContentLoaded', () => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const productId = urlParams.get('id');
+    if (productId) {
+        document.getElementById('productId').value = productId;
+        // Scroll to verify section smoothly
+        setTimeout(() => {
+            document.getElementById('verify').scrollIntoView({ behavior: 'smooth' });
+        }, 500);
+    }
+});
+</script>
