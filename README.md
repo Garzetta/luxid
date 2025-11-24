@@ -2,33 +2,40 @@
 
 A Web3 decentralized application (DApp) for authenticating luxury products using Ethereum blockchain technology. Built with Solidity smart contracts, Ethers.js, and a beautiful luxury-themed web interface.
 
-![LuxID Banner](https://img.shields.io/badge/Blockchain-Ethereum-blue) ![Solidity](https://img.shields.io/badge/Solidity-0.8.19-orange) ![License](https://img.shields.io/badge/License-MIT-green)
+![Blockchain](https://img.shields.io/badge/Blockchain-Ethereum-blue) ![Solidity](https://img.shields.io/badge/Solidity-0.8.19-orange) ![Web3](https://img.shields.io/badge/Web3-Ethers.js-purple)
+
+---
 
 ## 📋 Table of Contents
 
-- [Overview](#overview)
-- [Features](#features)
-- [Technology Stack](#technology-stack)
-- [Architecture](#architecture)
-- [Installation](#installation)
-- [Usage](#usage)
-- [Project Structure](#project-structure)
-- [Smart Contract](#smart-contract)
-- [API Endpoints](#api-endpoints)
-- [Screenshots](#screenshots)
-- [Team](#team)
-- [License](#license)
+- [Overview](#-overview)
+- [Features](#-features)
+- [Technology Stack](#️-technology-stack)
+- [Architecture](#️-architecture)
+- [Installation](#-installation)
+- [Usage](#-usage)
+- [Project Structure](#-project-structure)
+- [Smart Contract](#-smart-contract)
+- [API Endpoints](#-api-endpoints)
+- [Testing](#-testing)
+- [Deployment](#-deployment)
+- [Team](#-team)
+- [Acknowledgments](#-acknowledgments)
+
+---
 
 ## 🎯 Overview
 
-LuxID is a blockchain-based authentication system designed to combat counterfeit luxury goods. The system uses Ethereum smart contracts to store immutable product records, allowing customers to verify product authenticity through QR code scanning and web verification.
+**LuxID** is a blockchain-based authentication system designed to combat counterfeit luxury goods. The system uses Ethereum smart contracts to store immutable product records, allowing customers to verify product authenticity through QR code scanning and web verification.
 
 ### Why LuxID?
 
-- 💎 **Counterfeit Problem**: Fake luxury goods cost brands and consumers billions annually
-- 🔒 **Immutable Records**: Blockchain ensures product data cannot be altered or forged
-- 🌐 **Transparent Verification**: Anyone can verify authenticity on the blockchain
-- 📱 **Easy to Use**: Simple QR code scanning with instant verification
+- 💎 **Counterfeit Problem** - Fake luxury goods cost brands and consumers billions annually
+- 🔒 **Immutable Records** - Blockchain ensures product data cannot be altered or forged
+- 🌐 **Transparent Verification** - Anyone can verify authenticity on the blockchain
+- 📱 **Easy to Use** - Simple QR code scanning with instant verification
+
+---
 
 ## ✨ Features
 
@@ -46,6 +53,8 @@ LuxID is a blockchain-based authentication system designed to combat counterfeit
 - 🔐 **Duplicate Prevention** - Smart contract prevents duplicate registrations
 - 🌐 **Decentralized** - No single point of failure
 - 📜 **Transparent** - All records publicly verifiable
+
+---
 
 ## 🛠️ Technology Stack
 
@@ -70,6 +79,8 @@ LuxID is a blockchain-based authentication system designed to combat counterfeit
 - **QRCode** - QR code generation
 - **Chai** - Testing framework
 - **Mocha** - Test runner
+
+---
 
 ## 🏗️ Architecture
 ```
@@ -97,6 +108,8 @@ LuxID is a blockchain-based authentication system designed to combat counterfeit
 └─────────────────────────────────────────────┘
 ```
 
+---
+
 ## 📥 Installation
 
 ### Prerequisites
@@ -109,8 +122,8 @@ LuxID is a blockchain-based authentication system designed to combat counterfeit
 
 1. **Clone the repository**
 ```bash
-git clone https://github.com/Garzetta/luxid-lite.git
-cd luxid-lite
+git clone https://github.com/Garzetta/luxid.git
+cd luxid
 ```
 
 2. **Install dependencies**
@@ -128,16 +141,18 @@ npx hardhat compile
 npx hardhat test
 ```
 
+---
+
 ## 🚀 Usage
 
 ### Quick Start
 
-1. **Start local blockchain** (Terminal 1)
+**1. Start local blockchain** (Terminal 1)
 ```bash
 npx hardhat node
 ```
 
-2. **Deploy contract and register products** (Terminal 2)
+**2. Deploy contract and register products** (Terminal 2)
 ```bash
 # Deploy contract
 npx hardhat run blockchain/scripts/deploy.js --network localhost
@@ -151,12 +166,12 @@ node scripts/register.js RP-2025-03
 node scripts/gen_qr.js
 ```
 
-3. **Start web server** (Terminal 3)
+**3. Start web server** (Terminal 3)
 ```bash
 node scripts/web-server.js
 ```
 
-4. **Open browser**
+**4. Open browser**
 ```
 http://localhost:3001
 ```
@@ -188,6 +203,8 @@ node scripts/gen_qr.js
 ./scripts/demo_run.sh
 ```
 
+---
+
 ## 📁 Project Structure
 ```
 luxid_lite/
@@ -218,6 +235,8 @@ luxid_lite/
 └── README.md                      # This file
 ```
 
+---
+
 ## 🔐 Smart Contract
 
 ### LuxID.sol
@@ -246,6 +265,8 @@ contract LuxID {
 - Emits events for audit trails
 - Uses Keccak256 for cryptographic hashing
 
+---
+
 ## 🔌 API Endpoints
 
 ### REST API
@@ -253,10 +274,11 @@ contract LuxID {
 **Base URL:** `http://localhost:3001`
 
 #### Health Check
-```
+```http
 GET /api/health
 ```
-Response:
+
+**Response:**
 ```json
 {
   "status": "ok",
@@ -265,7 +287,7 @@ Response:
 ```
 
 #### Verify Product
-```
+```http
 POST /api/verify
 Content-Type: application/json
 
@@ -274,7 +296,7 @@ Content-Type: application/json
 }
 ```
 
-Success Response:
+**Success Response:**
 ```json
 {
   "status": "authentic",
@@ -288,7 +310,7 @@ Success Response:
 }
 ```
 
-Not Found Response:
+**Not Found Response:**
 ```json
 {
   "status": "not_found",
@@ -296,23 +318,16 @@ Not Found Response:
 }
 ```
 
-### CLI Demo
-```
-🔐 Registering product: LV-2025-01
-   Hash: 0x3cd6f78e7bc859d027217261dd68d705ad4e5843d805cef83ccbb3c41f0ae33b
-   Sending transaction...
-✅ Product registered successfully!
-   TX: 0x2b303c362b20a15c6b426543c09d29db81030f2312c3071278d590aec2590744
-```
+---
 
-## 📝 Testing
+## 🖥️ Testing
 
 Run the test suite:
 ```bash
 npx hardhat test
 ```
 
-Expected output:
+**Expected output:**
 ```
   LuxID Contract
     Deployment
@@ -329,43 +344,41 @@ Expected output:
   7 passing (2s)
 ```
 
+---
+
 ## 🌐 Deployment
 
 ### Local Development
-Currently configured for local Hardhat blockchain (default)
+Currently configured for local Hardhat blockchain (default setup for this academic project)
 
-### Testnet Deployment (Optional)
-To deploy to Ethereum testnets (Sepolia, Goerli):
+### Future Deployment Options
 
-1. Update `hardhat.config.js` with network configuration
-2. Add `.env` file with private key and RPC URL
-3. Deploy: `npx hardhat run blockchain/scripts/deploy.js --network sepolia`
+For production deployment, consider:
 
-### Production Considerations
-- Deploy to Ethereum mainnet or L2 solutions (Polygon, Arbitrum)
-- Implement proper access controls for product registration
-- Add multi-signature wallet for contract upgrades
-- Set up IPFS for decentralized QR code storage
-- Implement rate limiting and API authentication
+1. **Testnet Deployment** (Sepolia, Goerli)
+   - Update `hardhat.config.js` with network configuration
+   - Add `.env` file with private key and RPC URL
+   - Deploy: `npx hardhat run blockchain/scripts/deploy.js --network sepolia`
 
-## 🤝 Contributing
+2. **Mainnet Deployment** (Ethereum, Polygon, Arbitrum)
+   - Implement proper access controls for product registration
+   - Add multi-signature wallet for contract upgrades
+   - Set up IPFS for decentralized QR code storage
+   - Implement rate limiting and API authentication
+   - Conduct security audits
 
-This is an academic project. For suggestions or improvements:
+---
 
-1. Fork the repository
-2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
+## 👥 Team
 
-## 📄 Academic Project
+**Group 5 - Blockchain Technology Course**
 
 This project was developed as the final project for **Blockchain Technology Course**.
 
 ### Team Members
-- Rr. Garzetta Aleyda Harimurti (23/511422/PA/21793)
-- Klara Ahinta Daniswara (24/532751/PA/22531)  
-- Hilmi Fazli Nadiarni (25/562917/NPA/19984)
+- **Rr. Garzetta Aleyda Harimurti** - 23/511422/PA/21793
+- **Klara Ahinta Daniswara** - 24/532751/PA/22531
+- **Hilmi Fazli Nadiarni** - 25/562917/NPA/19984
 
 ### Purpose
 This is a proof-of-concept demonstration of blockchain technology applied to luxury product authentication. Created for educational purposes and academic evaluation.
@@ -373,17 +386,19 @@ This is a proof-of-concept demonstration of blockchain technology applied to lux
 ### Disclaimer
 This project is a prototype and is not intended for production use without further development, security audits, and proper testing.
 
-**© 2025 Group 5. All Rights Reserved for Academic Purposes.**
+**© 2025 LuxID Team. All Rights Reserved for Academic Purposes.**
+
+---
 
 ## 🙏 Acknowledgments
 
 - Blockchain Technology Course Instructor
 - Ethereum and Solidity documentation
 - Hardhat development framework
-- Open-source community
+- Open-source Web3 community
 
 ---
 
-**⭐ Star this repository if you find it helpful!**
+**⭐ If you find this project helpful, please consider giving it a star!**
 
 Built with ❤️  using Ethereum, Solidity, and Web3 technologies.
