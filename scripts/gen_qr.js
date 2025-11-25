@@ -13,13 +13,36 @@ async function generateQRCodes() {
     fs.mkdirSync(outputDir, { recursive: true });
   }
   
+  let successCount = 0;
+  
   for (const product of products) {
-    const filename = path.join(outputDir, `${product.id}.png`);
-    await QRCode.toFile(filename, product.id, { width: 300, margin: 2 });
-    console.log(`✅ Generated: ${product.id}.png`);
+    try {
+      const filename = path.join(outputDir, `${product.id}.png`);
+      
+      // Generate QR code with just the product ID (simple text)
+      await QRCode.toFile(filename, product.id, {
+        width: 300,
+        margin: 2,
+        color: {
+          dark: '#000000',
+          light: '#FFFFFF'
+        }
+      });
+      
+      console.log(`✅ Generated: ${product.id}.png`);
+      successCount++;
+    } catch (error) {
+      console.error(`❌ Failed to generate QR for ${product.id}:`, error.message);
+    }
   }
   
-  console.log(`\n🎉 Generated ${products.length} QR codes`);
+  console.log(`\n🎉 Generated ${successCount}/${products.length} QR codes`);
+  console.log(`   Location: ${outputDir}`);
+  console.log(`\n📱 QR codes contain simple text (e.g., "LV-2025-01")`);
+  console.log(`   Scan with phone camera → See ID → Enter on website`);
 }
 
-generateQRCodes().catch(console.error);
+generateQRCodes().catch(error => {
+  console.error("❌ QR generation failed:", error);
+  process.exit(1);
+});
